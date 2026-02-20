@@ -114,7 +114,7 @@
         #exportResult {
             word-break: break-all;
             white-space: pre-wrap;
-            max-height: 100px;
+            max-height: 150px;
             overflow-y: auto;
         }
     </style>
@@ -128,7 +128,7 @@
         <div class="bg-[#121212] rounded-2xl max-w-5xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gray-800">
             <div class="flex justify-between items-center p-5 border-b border-gray-800">
                 <h2 class="text-xl font-bold text-white flex items-center gap-3">
-                    <i data-lucide="terminal" class="w-6 h-6 text-blue-500"></i> Tips and Info
+                    <i data-lucide="terminal" class="w-6 h-6 text-blue-500"></i> Studio Guide & Code
                 </h2>
                 <button onclick="toggleHelp()" class="text-gray-400 hover:text-white hover:bg-gray-800 p-2 rounded-full transition">
                     <i data-lucide="x" class="w-6 h-6"></i>
@@ -146,7 +146,7 @@
                             <div class="flex items-center gap-2 text-gray-400"><span class="kbd-key">1</span> Brush</div>
                             <div class="flex items-center gap-2 text-gray-400"><span class="kbd-key">2</span> Line</div>
                             <div class="flex items-center gap-2 text-gray-400"><span class="kbd-key">3</span> Bucket</div>
-                            <div class="flex items-center gap-2 text-gray-400"><span class="kbd-key">4 / Middle Click</span> Pan View</div>
+                            <div class="flex items-center gap-2 text-gray-400"><span class="kbd-key">4</span> Pan View</div>
                             <div class="flex items-center gap-2 text-gray-400"><span class="kbd-key">Ctrl+Z</span> Undo</div>
                             <div class="flex items-center gap-2 text-gray-400"><span class="kbd-key">Ctrl+Y</span> Redo</div>
                         </div>
@@ -156,7 +156,7 @@
                             <i data-lucide="image" class="w-3 h-3"></i> Tips
                         </h3>
                         <div class="text-sm text-gray-400 leading-relaxed">
-                            Use <b>Import</b> to convert any photo into a 480x240 VEX-ready image. Adjust <b>Compression Slider</b> in Export to save memory.
+                            Use <b>Import</b> to convert any photo into a 480x240 VEX-ready image. Adjust <b>Similarity Blend</b> in Export to save memory.
                         </div>
                     </div>
                 </section>
@@ -164,71 +164,27 @@
                 <hr class="border-gray-800">
 
                 <div class="flex justify-center gap-4">
-                    <button onclick="setLang('cpp')" id="btn-cpp" class="lang-btn active">C++ (Competition)</button>
+                    <button onclick="setLang('vex')" id="btn-vex" class="lang-btn active">C++ (VEXcode)</button>
+                    <button onclick="setLang('pros')" id="btn-pros" class="lang-btn">C++ (PROS)</button>
                 </div>
 
                 <div class="relative">
-                    <!-- C++ CODE (FULLY FIXED FOR COMP TEMPLATE) -->
-                    <div id="cont-cpp" class="lang-content">
+                    <!-- VEXCODE PROS -->
+                    <div id="cont-vex" class="lang-content">
                         <div class="code-block-container">
 <pre><code><span class="code-comment">/*----------------------------------------------------------------------------*/
-/* */
-/* Module:       main.cpp                                                  */
-/* Description:  VEX V5 Pixel Art Renderer (Competition Format)            */
-/* */
+/* Module:       main.cpp (VEXcode Pro V5 Competition Template)            */
 /*----------------------------------------------------------------------------*/
 
-// ---- VEXCODE GENERATED CONFIGURATION (DO NOT EDIT) ----
-#pragma region VEXcode Generated Robot Configuration</span>
-<span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span>
-<span class="code-keyword">#include</span> <span class="code-string">&lt;stdlib.h&gt;</span>
-<span class="code-keyword">#include</span> <span class="code-string">&lt;stdbool.h&gt;</span>
-<span class="code-keyword">#include</span> <span class="code-string">&lt;math.h&gt;</span>
-<span class="code-keyword">#include</span> <span class="code-string">&lt;string.h&gt;</span>
-<span class="code-keyword">#include</span> <span class="code-string">&lt;vector&gt;</span>
+// 1. Paste this above all functions (Global Scope)</span>
 <span class="code-keyword">#include</span> <span class="code-string">&lt;string&gt;</span>
-
-<span class="code-keyword">#include</span> <span class="code-string">"vex.h"</span>
+<span class="code-keyword">#include</span> <span class="code-string">&lt;vector&gt;</span>
+<span class="code-keyword">#include</span> <span class="code-string">&lt;cstdlib&gt;</span>
 
 <span class="code-keyword">using namespace</span> <span class="code-type">vex</span>;
 
-<span class="code-type">brain</span> Brain;
-
-<span class="code-comment">// START V5 MACROS</span>
-<span class="code-keyword">#define</span> waitUntil(condition) \
-  <span class="code-keyword">do</span> { \
-    <span class="code-func">wait</span>(<span class="code-number">5</span>, msec); \
-  } <span class="code-keyword">while</span> (!(condition))
-
-<span class="code-keyword">#define</span> repeat(iterations) \
-  <span class="code-keyword">for</span> (<span class="code-keyword">int</span> iterator = <span class="code-number">0</span>; iterator &lt; iterations; iterator++)
-<span class="code-comment">// END V5 MACROS</span>
-
-<span class="code-keyword">void</span> <span class="code-func">initializeRandomSeed</span>(){
-  <span class="code-keyword">int</span> systemTime = Brain.Timer.systemHighResolution();
-  <span class="code-keyword">double</span> batteryCurrent = Brain.Battery.current();
-  <span class="code-keyword">double</span> batteryVoltage = Brain.Battery.voltage(voltageUnits::mV);
-  <span class="code-keyword">int</span> seed = <span class="code-keyword">int</span>(batteryVoltage + batteryCurrent * <span class="code-number">100</span>) + systemTime;
-  <span class="code-func">srand</span>(seed);
-}
-
-<span class="code-keyword">void</span> <span class="code-func">vexcodeInit</span>() {
-  <span class="code-func">initializeRandomSeed</span>(); 
-}
-<span class="code-comment">#pragma endregion VEXcode Generated Robot Configuration</span>
-<span class="code-comment">// ---- END CONFIGURATION ----</span>
-
-
-<span class="code-keyword">#include</span> <span class="code-string">"vex.h"</span>
-<span class="code-keyword">using namespace</span> <span class="code-type">vex</span>;
-
-<span class="code-comment">// -----------------------------------------------------------
-// PASTE YOUR PIXEL STUDIO EXPORT STRING BELOW
-// -----------------------------------------------------------</span>
 <span class="code-keyword">const char*</span> <span class="code-type">IMG_DATA</span> = <span class="code-string">"PASTE_STRING_HERE"</span>;
-<span class="code-comment">// -----------------------------------------------------------</span>
 
-<span class="code-comment">// Manual Base36 Parser (Fixes 'stoi' not found error)</span>
 <span class="code-keyword">int</span> <span class="code-func">b36ToInt</span>(<span class="code-type">std::string</span> s) {
     <span class="code-keyword">int</span> res = <span class="code-number">0</span>;
     <span class="code-keyword">for</span>(<span class="code-keyword">char</span> c : s) {
@@ -268,13 +224,10 @@
     <span class="code-keyword">int</span> x = <span class="code-number">0</span>, y = <span class="code-number">0</span>;
     <span class="code-keyword">while</span>(*ptr) {
         <span class="code-keyword">if</span>(*ptr == <span class="code-string">';'</span>) { x = <span class="code-number">0</span>; y += step; ptr++; <span class="code-keyword">continue</span>; }
-        
         <span class="code-type">std::string</span> iS = <span class="code-string">""</span>, lS = <span class="code-string">""</span>;
         <span class="code-keyword">while</span>(*ptr && *ptr != <span class="code-string">'.'</span>) iS += *ptr++; <span class="code-keyword">if</span>(*ptr == <span class="code-string">'.'</span>) ptr++;
         <span class="code-keyword">while</span>(*ptr && *ptr != <span class="code-string">','</span> && *ptr != <span class="code-string">';'</span>) lS += *ptr++; <span class="code-keyword">if</span>(*ptr == <span class="code-string">','</span>) ptr++;
-        
         <span class="code-keyword">int</span> cIdx = <span class="code-func">b36ToInt</span>(iS), run = <span class="code-func">b36ToInt</span>(lS);
-        
         <span class="code-keyword">if</span>(cIdx &lt; pal.<span class="code-func">size</span>()) {
             Brain.Screen.setFillColor(vex::color(pal[cIdx]));
             Brain.Screen.setPenColor(vex::color(pal[cIdx]));
@@ -286,77 +239,158 @@
     }
 }
 
+<span class="code-comment">// 2. Call in preAutonomous</span>
 <span class="code-keyword">void</span> <span class="code-func">preAutonomous</span>(<span class="code-keyword">void</span>) {
-  <span class="code-comment">// Draw the image when the program starts</span>
   <span class="code-func">drawArt</span>(<span class="code-type">IMG_DATA</span>);
-}
-
-<span class="code-keyword">void</span> <span class="code-func">autonomous</span>(<span class="code-keyword">void</span>) {
-  <span class="code-comment">// Autonomous code here</span>
-}
-
-<span class="code-keyword">void</span> <span class="code-func">userControl</span>(<span class="code-keyword">void</span>) {
-  <span class="code-keyword">while</span> (<span class="code-number">true</span>) {
-    <span class="code-func">wait</span>(<span class="code-number">20</span>, msec);
-  }
-}
-
-<span class="code-keyword">int</span> <span class="code-func">main</span>() {
-  <span class="code-comment">// Initializing Robot Configuration. DO NOT REMOVE!</span>
-  <span class="code-func">vexcodeInit</span>();
-  
-  <span class="code-type">competition</span> Competition;
-  Competition.<span class="code-func">autonomous</span>(autonomous);
-  Competition.<span class="code-func">drivercontrol</span>(userControl);
-
-  <span class="code-func">preAutonomous</span>();
-
-  <span class="code-keyword">while</span> (<span class="code-number">true</span>) {
-    <span class="code-func">wait</span>(<span class="code-number">100</span>, msec);
-  }
 }</code></pre>
                         </div>
                     </div>
-                    <!-- PYTHON CODE -->
-                    <div id="cont-py" class="lang-content hidden">
-                        <div class="code-block-container">
-<pre><code><span class="code-comment"># Paste into VEX Python Project</span>
-<span class="code-type">IMG_DATA</span> = <span class="code-string">"PASTE_STRING_HERE"</span>
 
-<span class="code-keyword">def</span> <span class="code-func">draw_art</span>(<span class="code-type">data</span>):
-    <span class="code-type">parts</span> = <span class="code-type">data</span>.<span class="code-func">split</span>(<span class="code-string">'|'</span>)
-    <span class="code-type">step</span> = <span class="code-builtin">int</span>(<span class="code-type">parts</span>[<span class="code-number">0</span>])
-    <span class="code-type">pal_strs</span> = <span class="code-type">parts</span>[<span class="code-number">1</span>].<span class="code-func">split</span>(<span class="code-string">','</span>)
-    <span class="code-type">palette</span> = []
+                    <!-- PROS C++ -->
+                    <div id="cont-pros" class="lang-content hidden">
+                        <div class="code-block-container">
+<pre><code><span class="code-comment">/* PROS (main.cpp) */
+/* Include these libraries at the top of your file */</span>
+<span class="code-keyword">#include</span> <span class="code-string">"main.h"</span>
+<span class="code-keyword">#include</span> <span class="code-string">&lt;string&gt;</span>
+<span class="code-keyword">#include</span> <span class="code-string">&lt;vector&gt;</span>
+<span class="code-keyword">#include</span> <span class="code-string">&lt;cstdlib&gt;</span>
+
+<span class="code-comment">// 1. Add this logic in the global scope (above initialize)</span>
+<span class="code-keyword">const char*</span> <span class="code-type">IMG_DATA</span> = <span class="code-string">"PASTE_STRING_HERE"</span>;
+
+<span class="code-keyword">long</span> <span class="code-func">parsePr</span>(<span class="code-keyword">const char*</span>& ptr, <span class="code-keyword">char</span> d) {
+    <span class="code-keyword">long</span> v = <span class="code-number">0</span>;
+    <span class="code-keyword">while</span> (*ptr && *ptr != d && *ptr != <span class="code-string">' '</span> && *ptr != <span class="code-string">'|'</span> && *ptr != <span class="code-string">';'</span>) {
+        v = v * <span class="code-number">10</span> + (*ptr - <span class="code-string">'0'</span>); ptr++;
+    }
+    <span class="code-keyword">if</span> (*ptr == d) ptr++;
+    <span class="code-keyword">return</span> v;
+}
+
+<span class="code-keyword">int</span> <span class="code-func">b36Pr</span>(<span class="code-type">std::string</span> s) {
+    <span class="code-keyword">int</span> res = <span class="code-number">0</span>;
+    <span class="code-keyword">for</span>(<span class="code-keyword">char</span> c : s) {
+        res *= <span class="code-number">36</span>;
+        <span class="code-keyword">if</span> (c >= <span class="code-string">'0'</span> && c &lt;= <span class="code-string">'9'</span>) res += (c - <span class="code-string">'0'</span>);
+        <span class="code-keyword">else if</span> (c >= <span class="code-string">'a'</span> && c &lt;= <span class="code-string">'z'</span>) res += (<span class="code-number">10</span> + (c - <span class="code-string">'a'</span>));
+    }
+    <span class="code-keyword">return</span> res;
+}
+
+<span class="code-keyword">void</span> <span class="code-func">drawArt</span>(<span class="code-keyword">const char*</span> data) {
+    <span class="code-type">pros</span>::screen::<span class="code-func">set_eraser</span>(<span class="code-number">0x000000</span>);
+    <span class="code-type">pros</span>::screen::<span class="code-func">erase</span>();
+    <span class="code-keyword">const char*</span> ptr = data;
+    <span class="code-keyword">int</span> step = <span class="code-func">parsePr</span>(ptr, <span class="code-string">'|'</span>);
     
-    <span class="code-keyword">for</span> <span class="code-type">h</span> <span class="code-keyword">in</span> <span class="code-type">pal_strs</span>:
-        <span class="code-keyword">if</span> <span class="code-type">h</span>.<span class="code-func">strip</span>():
-            <span class="code-type">v</span> = <span class="code-builtin">int</span>(<span class="code-type">h</span>.<span class="code-func">strip</span>(), <span class="code-number">16</span>)
-            <span class="code-type">palette</span>.<span class="code-func">append</span>(<span class="code-type">Color</span>((<span class="code-type">v</span>>><span class="code-number">16</span>)&<span class="code-number">255</span>, (<span class="code-type">v</span>>><span class="code-number">8</span>)&<span class="code-number">255</span>, <span class="code-type">v</span>&<span class="code-number">255</span>))
-            
-    <span class="code-type">y</span> = <span class="code-number">0</span>
-    <span class="code-type">rows</span> = <span class="code-type">parts</span>[<span class="code-number">2</span>].<span class="code-func">split</span>(<span class="code-string">';'</span>)
+    <span class="code-type">std::vector</span>&lt;<span class="code-keyword">uint32_t</span>&gt; pal;
+    <span class="code-keyword">while</span>(*ptr && *ptr != <span class="code-string">'|'</span>) {
+        <span class="code-keyword">char</span> hex[<span class="code-number">7</span>]; <span class="code-keyword">int</span> h = <span class="code-number">0</span>;
+        <span class="code-keyword">while</span>(*ptr && *ptr != <span class="code-string">','</span> && *ptr != <span class="code-string">'|'</span> && *ptr != <span class="code-string">' '</span>) {
+            <span class="code-keyword">if</span>(h &lt; <span class="code-number">6</span>) hex[h++] = *ptr; ptr++;
+        }
+        hex[h] = <span class="code-string">'\0'</span>;
+        pal.<span class="code-func">push_back</span>((<span class="code-keyword">uint32_t</span>)<span class="code-func">strtol</span>(hex, <span class="code-keyword">NULL</span>, <span class="code-number">16</span>));
+        <span class="code-keyword">if</span>(*ptr == <span class="code-string">','</span> || *ptr == <span class="code-string">' '</span>) ptr++;
+    }
+    <span class="code-keyword">if</span>(*ptr == <span class="code-string">'|'</span>) ptr++;
     
-    <span class="code-keyword">for</span> <span class="code-type">row</span> <span class="code-keyword">in</span> <span class="code-type">rows</span>:
-        <span class="code-type">x</span> = <span class="code-number">0</span> 
-        <span class="code-type">items</span> = <span class="code-type">row</span>.<span class="code-func">split</span>(<span class="code-string">','</span>)
-        <span class="code-keyword">for</span> <span class="code-type">item</span> <span class="code-keyword">in</span> <span class="code-type">items</span>:
-            <span class="code-keyword">if</span> <span class="code-string">'.'</span> <span class="code-keyword">not in</span> <span class="code-type">item</span>: <span class="code-keyword">continue</span>
-            <span class="code-type">p</span> = <span class="code-type">item</span>.<span class="code-func">split</span>(<span class="code-string">'.'</span>)
-            <span class="code-type">idx</span> = <span class="code-builtin">int</span>(<span class="code-type">p</span>[<span class="code-number">0</span>], <span class="code-number">36</span>)
-            <span class="code-type">count</span> = <span class="code-builtin">int</span>(<span class="code-type">p</span>[<span class="code-number">1</span>], <span class="code-number">36</span>)
-            
-            <span class="code-keyword">if</span> <span class="code-type">idx</span> < <span class="code-builtin">len</span>(<span class="code-type">palette</span>):
-                <span class="code-type">c</span> = <span class="code-type">palette</span>[<span class="code-type">idx</span>]
-                <span class="code-type">brain</span>.screen.<span class="code-func">set_pen_color</span>(<span class="code-type">c</span>)
-                <span class="code-type">brain</span>.screen.<span class="code-func">set_fill_color</span>(<span class="code-type">c</span>)
-                <span class="code-keyword">for</span> <span class="code-type">_</span> <span class="code-keyword">in</span> <span class="code-builtin">range</span>(<span class="code-type">count</span>):
-                    <span class="code-type">brain</span>.screen.<span class="code-func">draw_rectangle</span>(<span class="code-type">x</span>, <span class="code-type">y</span>, <span class="code-type">step</span>, <span class="code-type">step</span>)
-                    <span class="code-type">x</span> += <span class="code-type">step</span>
-        <span class="code-type">y</span> += <span class="code-type">step</span></code></pre>
+    <span class="code-keyword">int</span> x = <span class="code-number">0</span>, y = <span class="code-number">0</span>;
+    <span class="code-keyword">while</span>(*ptr) {
+        <span class="code-keyword">if</span>(*ptr == <span class="code-string">';'</span>) { x = <span class="code-number">0</span>; y += step; ptr++; <span class="code-keyword">continue</span>; }
+        
+        <span class="code-type">std::string</span> iS = <span class="code-string">""</span>, lS = <span class="code-string">""</span>;
+        <span class="code-keyword">while</span>(*ptr && *ptr != <span class="code-string">'.'</span>) iS += *ptr++; <span class="code-keyword">if</span>(*ptr == <span class="code-string">'.'</span>) ptr++;
+        <span class="code-keyword">while</span>(*ptr && *ptr != <span class="code-string">','</span> && *ptr != <span class="code-string">';'</span>) lS += *ptr++; <span class="code-keyword">if</span>(*ptr == <span class="code-string">','</span>) ptr++;
+        
+        <span class="code-keyword">int</span> cIdx = <span class="code-func">b36Pr</span>(iS), run = <span class="code-func">b36Pr</span>(lS);
+        
+        <span class="code-keyword">if</span>(cIdx &lt; pal.<span class="code-func">size</span>()) {
+            <span class="code-type">pros</span>::screen::<span class="code-func">set_pen</span>(pal[cIdx]);
+            <span class="code-keyword">for</span>(<span class="code-keyword">int</span> k=<span class="code-number">0</span>; k&lt;run; k++) {
+                <span class="code-keyword">if</span>(y &gt;= <span class="code-number">240</span>) <span class="code-keyword">return</span>;
+                <span class="code-type">pros</span>::screen::<span class="code-func">fill_rect</span>(x, y, x+step, y+step);
+                x += step;
+            }
+        }
+    }
+}
+
+<span class="code-comment">// 2. Add the function call in initialize()</span>
+<span class="code-keyword">void</span> <span class="code-func">initialize</span>() {
+    <span class="code-type">pros</span>::lcd::<span class="code-func">initialize</span>();
+    <span class="code-type">pros</span>::lcd::<span class="code-func">set_text</span>(<span class="code-number">1</span>, <span class="code-string">"Hello PROS User!"</span>);
+
+    <span class="code-comment">// Draw the compressed art</span>
+    <span class="code-func">drawArt</span>(<span class="code-type">IMG_DATA</span>);
+}</code></pre>
                         </div>
                     </div>
                 </div>
+
+                <hr class="border-gray-800">
+
+                <!-- Judges Documentation Section -->
+                <section class="pb-6">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2 mb-4">
+                        <i data-lucide="book-open" class="w-6 h-6 text-yellow-500"></i> Technical Information
+                    </h3>
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800 text-gray-300 text-sm leading-relaxed space-y-6">
+                        
+                        <!-- 1. System Architecture -->
+                        <div>
+                            <h4 class="text-blue-400 font-bold mb-2 uppercase tracking-wide text-xs">1. System Architecture & Libraries</h4>
+                            <p class="mb-2">
+                                The VEX Pixel Studio operates on a <strong>client-side, dependency-free architecture</strong>. The renderer logic is written in pure, standard C++ (<code>std::string</code>, <code>std::vector</code>, <code>std::cstdlib</code>) to ensure complete compatibility with both VEXcode Pro V5 and PROS without requiring external package managers or complex build chains.
+                            </p>
+                            <p>
+                                The web application utilizes the <strong>HTML5 Canvas API</strong> for high-performance image manipulation. When an image is imported, the <code>CanvasRenderingContext2D.drawImage()</code> method automatically handles the bicubic resampling required to fit arbitrary image resolutions into the strict 480x240 VEX display coordinate system.
+                            </p>
+                        </div>
+
+                        <!-- 2. Compression Pipeline -->
+                        <div>
+                            <h4 class="text-blue-400 font-bold mb-2 uppercase tracking-wide text-xs">2. The Compression Pipeline</h4>
+                            <p class="mb-2">
+                                Raw image data for a 480x240 screen requires over 115,200 data points. Storing this as a raw C++ array would consume excessive memory (~460KB), potentially causing stack overflows on the V5 Brain. To solve this, a multi-stage compression pipeline is used:
+                            </p>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-400">
+                                <li>
+                                    <strong>Quantization (Similarity Blend):</strong> The "Similarity Blend" slider utilizes a <em>Euclidean Distance</em> algorithm in RGB color space. It groups colors that are mathematically similar (e.g., merging <code>#FF0000</code> and <code>#FE0505</code>) into a single palette entry. This effectively performs "Lossy Compression" by reducing the entropy of the image, creating longer "runs" of identical pixels.
+                                </li>
+                                <li>
+                                    <strong>Run-Length Encoding (RLE):</strong> Instead of storing every pixel <code class="text-green-400">"Red, Red, Red, Red"</code>, the system stores <code class="text-green-400">"Red.4"</code>. This reduces the data size exponentially for images with solid backgrounds or simple shapes.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 3. Data Encoding -->
+                        <div>
+                            <h4 class="text-blue-400 font-bold mb-2 uppercase tracking-wide text-xs">3. Base36 Encoding Optimization</h4>
+                            <p>
+                                To further reduce the string literal size, all numerical data (pixel counts and palette indices) are converted from <strong>Base10 (Decimal)</strong> to <strong>Base36</strong>.
+                            </p>
+                            <div class="bg-black/40 p-3 rounded border border-gray-700 font-mono text-xs mt-2">
+                                Base10: "1000" (4 bytes)<br>
+                                Base36: "RS" (2 bytes) -> <span class="text-green-400">50% Space Savings</span>
+                            </div>
+                            <p class="mt-2">
+                                This allows large run-lengths to be represented by very few characters, keeping the exported string compact enough to be embedded directly into the C++ source code.
+                            </p>
+                        </div>
+
+                        <!-- 4. Error Handling -->
+                        <div>
+                            <h4 class="text-blue-400 font-bold mb-2 uppercase tracking-wide text-xs">4. Row-Break Error Correction</h4>
+                            <p>
+                                A critical vulnerability in standard RLE is "bit-shift propagation"—if one pixel is missed, every subsequent pixel shifts, distorting the entire image. This system implements <strong>Explicit Row Delimiters (<code>;</code>)</strong>. The decoder hard-resets the X-coordinate to 0 whenever a delimiter is reached, ensuring that corruption in one line never propagates to the rest of the image.
+                            </p>
+                        </div>
+
+                    </div>
+                </section>
+
             </div>
             
             <div class="p-4 bg-gray-900 border-t border-gray-800 rounded-b-2xl flex justify-end">
@@ -372,7 +406,7 @@
         <div class="bg-[#121212] rounded-2xl max-w-2xl w-full flex flex-col shadow-2xl border border-gray-800">
             <div class="flex justify-between items-center p-5 border-b border-gray-800">
                 <h2 class="text-xl font-bold text-white flex items-center gap-3">
-                    <i data-lucide="zap" class="w-6 h-6 text-yellow-500"></i> Export & Compress
+                    <i data-lucide="zap" class="w-6 h-6 text-yellow-500"></i> Smart Export
                 </h2>
                 <button onclick="toggleExportModal()" class="text-gray-400 hover:text-white p-2 rounded-full transition">
                     <i data-lucide="x" class="w-6 h-6"></i>
@@ -414,11 +448,6 @@
                         <div class="flex justify-between items-end mb-1">
                             <p class="text-sm text-gray-400">Compressed Data:</p>
                             <span id="charCount" class="text-[10px] font-mono text-gray-500 uppercase">0 Chars</span>
-                        </div>
-                        <!-- Memory Warning -->
-                        <div id="memoryWarning" class="hidden text-[10px] text-red-200 bg-red-900/40 border border-red-900 p-2 rounded mb-2 flex items-start gap-2">
-                            <i data-lucide="alert-triangle" class="w-3 h-3 mt-0.5 shrink-0"></i>
-                            <span>Warning: String > 50KB. Increase "Similarity Blend" to prevent Python memory errors.</span>
                         </div>
                         <div class="bg-black/50 p-4 rounded-xl border border-gray-800 font-mono text-[10px] text-green-400 break-all select-all flex-1 overflow-y-auto" id="exportResult"></div>
                     </div>
@@ -526,7 +555,6 @@
     function initPalette() {
         const existing = paletteDiv.querySelectorAll('.color-swatch');
         existing.forEach(e => e.remove());
-
         presets.forEach(hex => {
             const btn = document.createElement('div');
             btn.className = 'color-swatch shrink-0';
@@ -669,10 +697,7 @@
         previewCtx.putImageData(pData, 0, 0);
         const result = `${step}|${palette.join(',')} |${rows.join(';')}`;
         document.getElementById('exportResult').innerText = result;
-        const len = result.length;
-        document.getElementById('charCount').innerText = `${len.toLocaleString()} Chars`;
-        if(len > 50000) document.getElementById('memoryWarning').classList.remove('hidden');
-        else document.getElementById('memoryWarning').classList.add('hidden');
+        document.getElementById('charCount').innerText = `${result.length.toLocaleString()} Chars`;
     };
 
     function getCoords(e) {
